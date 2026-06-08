@@ -130,6 +130,10 @@ class BasicBot(Player):
                                 print("collision detected", tile)
                                 path = path[:i]
                                 break 
+                        if self.is_enemy_on_tile(status, tile):
+                                print("Enemy detected", tile)
+                                path = path[:i]
+                                break
                         i+=1
                 return path
 
@@ -146,10 +150,16 @@ class BasicBot(Player):
                 return False
                 
                 # old version: check specifically for walls and mines
-"""                if  tileStatus == TileStatus.Wall or tileStatus == TileStatus.Mine:
+                """ if  tileStatus == TileStatus.Wall or tileStatus == TileStatus.Mine:
                         print("Found an obstacle")
                         return True
                 elif tileStatus == TileStatus.Unknown: return None
                 return False"""
+
+        def is_enemy_on_tile(self, status, pos):
+                for other in status.others:
+                        if other is not None and (other.x, other.y) == pos:
+                                return True
+                return False
 
 players = [ BasicBot()]
